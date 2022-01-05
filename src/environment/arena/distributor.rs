@@ -1,8 +1,9 @@
-use crate::environment::powerup::*;
-use crate::environment::modifier::Modifier;
+use crate::environment::arena::powerup::*;
+use crate::environment::arena::modifier::Modifier;
 use rand::Rng;
+use crate::environment::arrow::Arrow;
 
-
+#[macro_export]
 macro_rules! gen_coords {
   ($dimensions:expr) => {{
     let mut rng = rand::thread_rng();
@@ -14,22 +15,18 @@ macro_rules! gen_coords {
 }
 
 
-pub struct PowerupDistribution {
+pub struct Distributor {
   total_num: u32,
-  concentration: f32,  // todo make this do something
   dimensions: [u32; 2],
   taken_coords: Vec<[u32; 2]>
 }
 
-impl PowerupDistribution {
+impl Distributor {
   pub fn new(
-    concentration: f32,
     dimensions: [u32; 2]
   ) -> Self {
-    assert!(concentration > 0.0 && concentration <= 1.0);
     Self {
       total_num: 0,
-      concentration,
       dimensions,
       taken_coords: vec![]
     }
@@ -61,5 +58,9 @@ impl PowerupDistribution {
     self.total_num += 1;
     self.taken_coords.push(potential_coords);
     from_modifier(&potential_coords, modifier)
+  }
+
+  pub fn make_arrow(&mut self) -> Arrow {
+    
   }
 }

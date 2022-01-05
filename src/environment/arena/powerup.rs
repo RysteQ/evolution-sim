@@ -1,4 +1,4 @@
-use crate::environment::modifier::Modifier;
+use crate::environment::arena::modifier::Modifier;
 
 pub struct Powerup {
   coords: [u32; 2],
@@ -34,7 +34,7 @@ impl Powerup {
 
 pub fn new_random_modifier(coords: [u32; 2]) -> Powerup {
   match rand::random::<Modifier>() {
-    Modifier::Strength => new_strength(coords),
+    Modifier::Eyesight => new_eyesight(coords),
     Modifier::Speed => new_speed(coords),
     Modifier::Health => new_health(coords),
   }
@@ -44,8 +44,8 @@ pub fn new_speed(coords: [u32; 2]) -> Powerup {
   Powerup::new(coords, Modifier::Speed, 's')
 }
 
-pub fn new_strength(coords: [u32; 2]) -> Powerup {
-  Powerup::new(coords, Modifier::Strength, 'a')
+pub fn new_eyesight(coords: [u32; 2]) -> Powerup {
+  Powerup::new(coords, Modifier::Eyesight, 'e')
 }
 
 pub fn new_health(coords: [u32; 2]) -> Powerup {
@@ -54,7 +54,7 @@ pub fn new_health(coords: [u32; 2]) -> Powerup {
 
 pub fn from_modifier(coords: &[u32; 2], modifier: Modifier) -> Powerup {
   match modifier {
-    Modifier::Strength => new_strength(*coords),
+    Modifier::Eyesight => new_eyesight(*coords),
     Modifier::Speed => new_speed(*coords),
     Modifier::Health => new_health(*coords),
   }
