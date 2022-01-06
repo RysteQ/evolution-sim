@@ -1,5 +1,5 @@
 mod powerup;
-mod modifier;
+pub mod modifier;
 mod distributor;
 
 
@@ -18,12 +18,17 @@ pub struct Arena {
 }
 
 impl Arena {
-  pub fn new(dimensions: [u32; 2], arrow_amount: u32, arrow_maker: ArrowMaker) -> Self {
+  pub fn new(
+    dimensions: [u32; 2], 
+    powerup_amount: u32, 
+    arrow_amount: u32, 
+    arrow_maker: ArrowMaker
+  ) -> Self {
 
     let mut distributor = Distributor::new(dimensions);
     let mut powerups = Vec::new();
     let mut arrows = Vec::new();
-    for _ in 0..4 {
+    for _ in 0..powerup_amount {
       powerups.push(distributor.make_powerup(None))
     }
     for _ in 0..arrow_amount {
@@ -71,7 +76,7 @@ impl Arena {
   }
 
   pub fn update(&mut self) {
-    self.arrows.get_mut(0).unwrap().make_move(Direction::Right);
+    self.arrows.iter_mut().for_each(|a| a.tick());
 
 
     

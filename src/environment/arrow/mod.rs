@@ -1,11 +1,13 @@
 pub mod arrow_maker;
 pub mod direction;
+mod brain;
 
 use crate::environment::arrow::arrow_maker::ArrowMaker;
 use crate::environment::arrow::direction::Direction;
 
 pub struct Arrow {
   coords: Option<[u32; 2]>,
+  brain: Brain,
   symbol: char,
   speed: f32,
   health: u32,
@@ -47,7 +49,7 @@ impl Arrow {
     self.symbol
   }
 
-  pub fn make_move(&mut self, direction: Direction) {
+  fn make_move(&mut self, direction: Direction) {
     match direction {
         Direction::Up => {
           let mut new_coords = self.coords.take().unwrap();
@@ -76,5 +78,9 @@ impl Arrow {
         Direction::NoDirection => self.symbol = '•',
       }
     self.previous_movement = direction;
+  }
+
+  pub fn tick(&mut self) {
+    
   }
 }

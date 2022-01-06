@@ -1,4 +1,5 @@
 mod environment;
+mod evolution;
 
 use std::sync::{Arc, Mutex};
 use std::{thread, time};
@@ -20,7 +21,7 @@ fn main() {
 
   
   let arrow_maker = ArrowMaker::default();
-  let arena_counter = Arc::new(Mutex::new(Arena::new([50, 25], 10, arrow_maker)));
+  let arena_counter = Arc::new(Mutex::new(Arena::new([50, 25], 6, 10, arrow_maker)));
 
   let render_arena_counter = Arc::clone(&arena_counter);
   thread::spawn(move || {
@@ -34,9 +35,9 @@ fn main() {
     }
   });
 
+  thread::sleep(time::Duration::from_millis(250));
 
-
-  let update_wait_time = time::Duration::from_millis(600);
+  let update_wait_time = time::Duration::from_millis(500);
   loop {
     thread::sleep(update_wait_time);
     let mut arena = arena_counter.lock().unwrap();
