@@ -1,5 +1,6 @@
 use crate::environment::arrow::direction::Direction;
 
+#[derive(Clone)]
 pub struct Decisions {
   up: f32,
   left: f32,
@@ -21,13 +22,13 @@ impl Default for Decisions {
 }
 
 impl Decisions {
-  pub fn get_move(&self) -> Direction {
+  pub fn make_decision(&self) -> Direction {
     match {
       use ordered_float::NotNan;
       use rand::Rng;
       
       let mut rng = rand::thread_rng();
-      let mut choices_vec = [
+      let choices_vec = [
         rng.gen_range(0.0..self.up),
         rng.gen_range(0.0..self.left),
         rng.gen_range(0.0..self.down),

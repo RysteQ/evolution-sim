@@ -7,7 +7,6 @@ use crate::environment::arena::powerup::Powerup;
 use crate::environment::arena::distributor::Distributor;
 use crate::environment::arrow::Arrow;
 use crate::environment::arrow::arrow_maker::ArrowMaker;
-use crate::environment::arrow::direction::Direction;
 
 
 pub struct Arena {
@@ -82,7 +81,7 @@ impl Arena {
     
     // wrap the arrows around the board
     for i in 0..self.arrows.len() {
-      let mut arrow = self.arrows.get_mut(i).unwrap();
+      let arrow = self.arrows.get_mut(i).unwrap();
       let coords = arrow.get_coords();
       if coords[0] == 0 {
         arrow.set_coords([self.dimensions[0] - 2, coords[1]])

@@ -4,6 +4,7 @@ mod brain;
 
 use crate::environment::arrow::arrow_maker::ArrowMaker;
 use crate::environment::arrow::direction::Direction;
+use crate::environment::arrow::brain::Brain;
 
 pub struct Arrow {
   coords: Option<[u32; 2]>,
@@ -18,6 +19,7 @@ pub struct Arrow {
 impl From<&ArrowMaker> for Arrow {
   fn from(arrow_maker: &ArrowMaker) -> Self {
     Self::new(
+      arrow_maker.get_brain(),
       arrow_maker.get_speed(),
       arrow_maker.get_health(),
       arrow_maker.get_eyesight()
@@ -26,9 +28,10 @@ impl From<&ArrowMaker> for Arrow {
 }
 
 impl Arrow {
-  fn new(speed: f32, health: u32, eyesight: u32) -> Self {
+  fn new(brain: Brain, speed: f32, health: u32, eyesight: u32) -> Self {
     Self {
       coords: None,
+      brain,
       symbol: '•',
       speed,
       health,
@@ -81,6 +84,6 @@ impl Arrow {
   }
 
   pub fn tick(&mut self) {
-    
+    self.make_move(self.brain.make_decision())
   }
 }

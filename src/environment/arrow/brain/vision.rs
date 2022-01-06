@@ -1,5 +1,6 @@
 use crate::environment::arena::modifier::Modifier;
 
+#[derive(Clone)]
 pub struct Vision {
   arrows: Vec<[u32; 2]>,
   powerups: Vec<(Modifier, [u32; 2])>,
