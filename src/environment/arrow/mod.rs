@@ -47,39 +47,34 @@ impl Arrow {
     self.symbol
   }
 
-  pub fn make_move(&mut self, direction: Option<Direction>) {
+  pub fn make_move(&mut self, direction: Direction) {
     match direction {
-      Some(ref direction) => {
-        match direction {
-          Direction::Up => {
-            let mut new_coords = self.coords.take().unwrap();
-            new_coords[1] -= self.speed as u32;
-            self.coords = Some(new_coords);
-            self.symbol = '^';
-          }
-          Direction::Left => {
-            let mut new_coords = self.coords.take().unwrap();
-            new_coords[0] -= self.speed as u32;
-            self.coords = Some(new_coords);
-            self.symbol = '<';
-          }
-          Direction::Down => {
-            let mut new_coords = self.coords.take().unwrap();
-            new_coords[1] += self.speed as u32;
-            self.coords = Some(new_coords);
-            self.symbol = 'v';
-          }
-          Direction::Right => {
-            let mut new_coords = self.coords.take().unwrap();
-            new_coords[0] += self.speed as u32;
-            self.coords = Some(new_coords);
-            self.symbol = '>';
-          }
+        Direction::Up => {
+          let mut new_coords = self.coords.take().unwrap();
+          new_coords[1] -= self.speed as u32;
+          self.coords = Some(new_coords);
+          self.symbol = '^';
         }
+        Direction::Left => {
+          let mut new_coords = self.coords.take().unwrap();
+          new_coords[0] -= self.speed as u32;
+          self.coords = Some(new_coords);
+          self.symbol = '<';
+        }
+        Direction::Down => {
+          let mut new_coords = self.coords.take().unwrap();
+          new_coords[1] += self.speed as u32;
+          self.coords = Some(new_coords);
+          self.symbol = 'v';
+        }
+        Direction::Right => {
+          let mut new_coords = self.coords.take().unwrap();
+          new_coords[0] += self.speed as u32;
+          self.coords = Some(new_coords);
+          self.symbol = '>';
+        }
+        Direction::NoDirection => self.symbol = '•',
       }
-      None => self.symbol = '•',
-    }
-
     self.previous_movement = direction;
   }
 }
