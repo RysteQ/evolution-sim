@@ -71,7 +71,7 @@ impl Arena {
   }
 
   pub fn update(&mut self) {
-    self.arrows.get_mut(0).unwrap().make_move(Some(Direction::Right));
+    self.arrows.get_mut(0).unwrap().make_move(Direction::Right);
 
 
     

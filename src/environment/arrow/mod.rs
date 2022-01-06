@@ -10,7 +10,7 @@ pub struct Arrow {
   speed: f32,
   health: u32,
   eyesight: u32,
-  previous_movement: Option<Direction>
+  previous_movement: Direction
 }
 
 impl From<&ArrowMaker> for Arrow {
@@ -31,7 +31,7 @@ impl Arrow {
       speed,
       health,
       eyesight,
-      previous_movement: None
+      previous_movement: Direction::NoDirection
     }
   }
 
