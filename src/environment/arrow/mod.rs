@@ -1,10 +1,8 @@
-mod arrow_maker;
-mod direction;
+pub mod arrow_maker;
+pub mod direction;
 
 use crate::environment::arrow::arrow_maker::ArrowMaker;
 use crate::environment::arrow::direction::Direction;
-use rand::Rng;
-use crate::gen_coords;
 
 pub struct Arrow {
   coords: Option<[u32; 2]>,
@@ -15,8 +13,8 @@ pub struct Arrow {
   previous_movement: Option<Direction>
 }
 
-impl From<ArrowMaker> for Arrow {
-  fn from(arrow_maker: ArrowMaker) -> Self {
+impl From<&ArrowMaker> for Arrow {
+  fn from(arrow_maker: &ArrowMaker) -> Self {
     Self::new(
       arrow_maker.get_speed(),
       arrow_maker.get_health(),
@@ -37,29 +35,51 @@ impl Arrow {
     }
   }
 
+  pub fn set_coords(&mut self, coords: [u32; 2]) {
+    self.coords = Some(coords);
+  }
+
+  pub fn get_coords(&self) -> [u32; 2] {
+    self.coords.unwrap()
+  }
+
+  pub fn get_symbol(&self) -> char {
+    self.symbol
+  }
+
   pub fn make_move(&mut self, direction: Option<Direction>) {
     match direction {
-      Some(direction) => {
+      Some(ref direction) => {
         match direction {
           Direction::Up => {
-            self.coords.unwrap()[1] = { self.coords.unwrap()[1] as f32 - self.speed } as u32;
+            let mut new_coords = self.coords.take().unwrap();
+            new_coords[1] -= self.speed as u32;
+            self.coords = Some(new_coords);
             self.symbol = '^';
           }
           Direction::Left => {
-            self.coords.unwrap()[0] = { self.coords.unwrap()[1] as f32 - self.speed } as u32;
+            let mut new_coords = self.coords.take().unwrap();
+            new_coords[0] -= self.speed as u32;
+            self.coords = Some(new_coords);
             self.symbol = '<';
           }
           Direction::Down => {
-            self.coords.unwrap()[1] = { self.coords.unwrap()[1] as f32 + self.speed } as u32;
+            let mut new_coords = self.coords.take().unwrap();
+            new_coords[1] += self.speed as u32;
+            self.coords = Some(new_coords);
             self.symbol = 'v';
           }
           Direction::Right => {
-            self.coords.unwrap()[0] = { self.coords.unwrap()[1] as f32 + self.speed } as u32;
+            let mut new_coords = self.coords.take().unwrap();
+            new_coords[0] += self.speed as u32;
+            self.coords = Some(new_coords);
             self.symbol = '>';
           }
         }
       }
       None => self.symbol = '•',
     }
+
+    self.previous_movement = direction;
   }
 }

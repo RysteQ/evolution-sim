@@ -3,6 +3,7 @@ mod environment;
 use std::sync::{Arc, Mutex};
 use std::{thread, time};
 use crate::environment::arena::Arena;
+use crate::environment::arrow::arrow_maker::ArrowMaker;
 
 macro_rules! sleep_clear_screen {
   ($wait_time:expr) => {
@@ -17,7 +18,9 @@ fn main() {
     println!();
   }
 
-  let arena_counter = Arc::new(Mutex::new(Arena::new([150, 25])));
+  
+  let arrow_maker = ArrowMaker::default();
+  let arena_counter = Arc::new(Mutex::new(Arena::new([50, 25], 10, arrow_maker)));
 
   let render_arena_counter = Arc::clone(&arena_counter);
   thread::spawn(move || {
@@ -25,7 +28,7 @@ fn main() {
 
     loop {
       sleep_clear_screen!(render_wait_time);
-      let mut arena = render_arena_counter.lock().unwrap();
+      let arena = render_arena_counter.lock().unwrap();
 
       arena.render();
     }
@@ -36,6 +39,7 @@ fn main() {
   let update_wait_time = time::Duration::from_millis(600);
   loop {
     thread::sleep(update_wait_time);
-    // arena_counter.lock().unwrap().foo();
+    let mut arena = arena_counter.lock().unwrap();
+    arena.update();
   }
 }

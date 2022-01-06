@@ -2,6 +2,7 @@ use crate::environment::arena::powerup::*;
 use crate::environment::arena::modifier::Modifier;
 use rand::Rng;
 use crate::environment::arrow::Arrow;
+use crate::environment::arrow::arrow_maker::ArrowMaker;
 
 #[macro_export]
 macro_rules! gen_coords {
@@ -16,7 +17,6 @@ macro_rules! gen_coords {
 
 
 pub struct Distributor {
-  total_num: u32,
   dimensions: [u32; 2],
   taken_coords: Vec<[u32; 2]>
 }
@@ -26,7 +26,6 @@ impl Distributor {
     dimensions: [u32; 2]
   ) -> Self {
     Self {
-      total_num: 0,
       dimensions,
       taken_coords: vec![]
     }
@@ -55,12 +54,27 @@ impl Distributor {
     }
 
     
-    self.total_num += 1;
     self.taken_coords.push(potential_coords);
     from_modifier(&potential_coords, modifier)
   }
 
-  pub fn make_arrow(&mut self) -> Arrow {
+  pub fn make_arrow(&mut self, arrow_maker: &ArrowMaker) -> Arrow {
+    let mut potential_coords = gen_coords!(self.dimensions);
+    {
+      let mut i = 0;
+      while self.taken_coords.contains(&potential_coords) &&
+        i < self.dimensions[0] * self.dimensions[1] {
+        potential_coords = gen_coords!(self.dimensions);
+        i += 1;
+      }
+      if self.taken_coords.contains(&potential_coords) {
+        panic!("too many arrows and not enough space!");
+      }
+    }
     
+    self.taken_coords.push(potential_coords);
+    let mut arrow = Arrow::from(arrow_maker);
+    arrow.set_coords(potential_coords);
+    arrow
   }
 }

@@ -1,2 +1,2 @@
 pub mod arena;
-mod arrow;
+pub mod arrow;

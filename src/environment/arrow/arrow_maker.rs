@@ -4,6 +4,16 @@ pub struct ArrowMaker {
   eyesight: u32,
 }
 
+impl Default for ArrowMaker {
+  fn default() -> Self {
+    Self {
+      speed: 1.0,
+      health: 1,
+      eyesight: 3
+    }
+  }
+}
+
 impl ArrowMaker {
   pub fn get_speed(&self) -> f32 {
     self.speed
