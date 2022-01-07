@@ -23,6 +23,10 @@ impl Node {
     }
   }
 
+  pub fn get_through_value(&self) -> f32 {
+    self.through_value.unwrap()
+  }
+
   fn activate(&self) -> bool {
     self.through_value.unwrap() >= self.threshold
   }
@@ -31,7 +35,7 @@ impl Node {
     self.out_edges.iter()
       .for_each(|edge| 
                   edge.borrow_mut().fire(self.through_value.unwrap())
-               );
+                );
   }
 }
   

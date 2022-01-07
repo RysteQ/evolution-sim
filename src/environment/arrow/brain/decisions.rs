@@ -21,6 +21,18 @@ impl Default for Decisions {
   }
 }
 
+impl From<[f32; 5]> for Decisions {
+  fn from(input_array: [f32; 5]) -> Self {
+    Self {
+      up: input_array[0],
+      left: input_array[1],
+      down: input_array[2],
+      right: input_array[3],
+      still: input_array[4],
+    }
+  }
+}
+
 impl Decisions {
   pub fn make_decision(&self) -> Direction {
     match {

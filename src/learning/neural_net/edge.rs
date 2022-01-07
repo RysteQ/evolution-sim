@@ -27,6 +27,6 @@ impl Edge {
   }
 
   fn send_value(&self) {
-    
+    self.output_node.borrow_mut().fire(self.through_value.unwrap());
   }
 }
