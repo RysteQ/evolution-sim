@@ -1,7 +1,5 @@
 mod vision;
 mod decisions;
-mod brain_maker;
-mod decisions_maker;
 
 use crate::environment::arrow::brain::vision::Vision;
 use crate::environment::arrow::brain::decisions::Decisions;
@@ -11,6 +9,7 @@ use crate::environment::arrow::direction::Direction;
 pub struct Brain {
   viewing: Vision,
   decisions: Decisions,
+  snapshots: Vec<(Vision, Direction)>,
 }
 
 impl Brain {

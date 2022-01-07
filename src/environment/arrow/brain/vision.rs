@@ -14,3 +14,7 @@ impl Default for Vision {
     }
   }
 }
+
+impl Vision {
+  
+}

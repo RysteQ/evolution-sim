@@ -28,6 +28,10 @@ impl From<&ArrowMaker> for Arrow {
 }
 
 impl Arrow {
+  pub fn tick(&mut self) {
+    self.make_move(self.brain.make_decision())
+  }
+
   fn new(brain: Brain, speed: f32, health: u32, eyesight: u32) -> Self {
     Self {
       coords: None,
@@ -81,9 +85,5 @@ impl Arrow {
         Direction::NoDirection => self.symbol = '•',
       }
     self.previous_movement = direction;
-  }
-
-  pub fn tick(&mut self) {
-    self.make_move(self.brain.make_decision())
   }
 }

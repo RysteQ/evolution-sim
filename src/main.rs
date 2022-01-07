@@ -1,4 +1,5 @@
 mod environment;
+mod learning;
 
 use std::sync::{Arc, Mutex};
 use std::{thread, time};
