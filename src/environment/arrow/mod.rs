@@ -29,7 +29,8 @@ impl From<&ArrowMaker> for Arrow {
 
 impl Arrow {
   pub fn tick(&mut self) {
-    self.make_move(self.brain.make_decision())
+    let decision = self.brain.make_decision();
+    self.make_move(decision)
   }
 
   fn new(brain: Brain, speed: f32, health: u32, eyesight: u32) -> Self {

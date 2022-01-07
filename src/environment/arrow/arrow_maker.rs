@@ -10,7 +10,7 @@ pub struct ArrowMaker {
 impl Default for ArrowMaker {
   fn default() -> Self {
     Self {
-      brain: Brain::default(),
+      brain: Brain::default_with_neural_net(3),
       speed: 1.0,
       health: 1,
       eyesight: 3

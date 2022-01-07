@@ -19,7 +19,12 @@ impl Bias {
 
     let mut ret_vec = Vec::new();
 
+    for bias in self.object_bias.get_biases() {
+      ret_vec.push(bias);
+    }
+    ret_vec.push(self.distance_bias.get_bias());
 
     
+    ret_vec
   }
 }

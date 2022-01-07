@@ -5,6 +5,7 @@
 */
 
 use crate::environment::arrow::brain::bias::object_type::ObjectType;
+use crate::environment::arena::modifier::Modifier;
 
 #[derive(Clone)]
 pub struct ObjectBias {

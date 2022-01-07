@@ -22,9 +22,9 @@ impl DistanceBias {
   }
 
   pub fn change_bias_array(&mut self, relative_coords: [u32; 2]) {
-    self.change_bias_f32({ 
-      { relative_coords[0] * relative_coords[0] } + 
-      { relative_coords[1] * relative_coords[1] }
-    }.sqrt());
+    self.change_bias_f32({ (
+        ( relative_coords[0] * relative_coords[0] ) + 
+        ( relative_coords[1] * relative_coords[1] )
+    ) as f32 }.sqrt());
   }
 }
