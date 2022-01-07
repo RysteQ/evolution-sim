@@ -1,19 +1,24 @@
 mod vision;
 mod decisions;
+mod bias;
 
 use crate::environment::arrow::brain::vision::Vision;
 use crate::environment::arrow::brain::decisions::Decisions;
 use crate::environment::arrow::direction::Direction;
+use crate::environment::arrow::brain::bias::Bias;
+use crate::learning::neural_net::NeuralNet;
 
 #[derive(Default, Clone)]
 pub struct Brain {
+  neural_net: NeuralNet,
+  bias: Bias,
   viewing: Vision,
-  decisions: Decisions,
-  snapshots: Vec<(Vision, Direction)>,
 }
 
 impl Brain {
-  pub fn make_decision(&self) -> Direction {
-    self.decisions.make_decision()
+  pub fn make_decision(&mut self) -> Direction {
+    Decisions::from(self.neural_net.get_decision_array({
+      
+    })).make_decision()
   }
 }

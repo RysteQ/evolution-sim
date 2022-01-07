@@ -1,10 +1,11 @@
-use std::cell::RefCell;
-use std::rc::Rc;
+use std::borrow::BorrowMut;
+use std::sync::{Arc, Mutex};
 use crate::learning::neural_net::node::Node;
 use crate::learning::neural_net::net_aspect::NetAspect;
 
+#[derive(Clone)]
 pub struct Edge {
-  output_node: Rc<RefCell<Node>>,
+  output_node: Arc<Mutex<Node>>,
   weight: f32,
   through_value: Option<f32>
 }
@@ -27,6 +28,6 @@ impl Edge {
   }
 
   fn send_value(&self) {
-    self.output_node.borrow_mut().fire(self.through_value.unwrap());
+    { **self.output_node.borrow_mut() }.lock().unwrap().fire(self.through_value.unwrap());
   }
 }

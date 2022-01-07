@@ -1,12 +1,23 @@
-use std::cell::RefCell;
-use std::rc::Rc;
+use std::borrow::BorrowMut;
+use std::sync::{Arc, Mutex};
 use crate::learning::neural_net::edge::Edge;
 use crate::learning::neural_net::net_aspect::NetAspect;
 
+#[derive(Clone)]
 pub struct Node {
-  out_edges: Vec<Rc<RefCell<Edge>>>,
+  out_edges: Option<Vec<Arc<Mutex<Edge>>>>,
   through_value: Option<f32>,
   threshold: f32,
+}
+
+impl Default for Node {
+  fn default() -> Self {
+    Self {
+      out_edges: None,
+      through_value: None,
+      threshold: 1.0
+    }
+  }
 }
 
 impl NetAspect for Node {
@@ -32,9 +43,10 @@ impl Node {
   }
   
   fn send_value(&self) {
-    self.out_edges.iter()
+    self.out_edges.unwrap().iter()
       .for_each(|edge| 
-                  edge.borrow_mut().fire(self.through_value.unwrap())
+                  { ***edge.borrow_mut() }.lock().unwrap()
+                    .fire(self.through_value.unwrap())
                 );
   }
 }

@@ -16,5 +16,11 @@ impl Default for Vision {
 }
 
 impl Vision {
-  
+  pub fn get_arrows(&self) -> Vec<[u32; 2]> {
+    self.arrows
+  }
+
+  pub fn get_powerups(&self) -> Vec<(Modifier, [u32; 2])> {
+    self.powerups
+  }
 }

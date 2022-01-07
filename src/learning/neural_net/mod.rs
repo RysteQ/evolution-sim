@@ -2,15 +2,9 @@ mod edge;
 mod node;
 mod net_aspect;
 
-use crate::learning::neural_net::edge::Edge;
 use crate::learning::neural_net::node::Node;
 
-/* 
-  make this a "manager" of some sort so
-  the nodes and edges can be destroyed instead of 
-  staying in memory until the learning is done;
-  this is a bad long-run idea
-*/
+#[derive(Clone, Default)]
 pub struct NeuralNet {
   input_layer: Vec<Node>,
   hidden_layers: Vec<Vec<Node>>,
