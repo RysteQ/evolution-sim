@@ -29,6 +29,11 @@
 - Dumping of a trained model, likely in RON format. This can help with debugging and exposition of this project.
 - Config files to change currently hardcoded values.
 
+## How to build
+- Install Rust and Cargo, preferably using [rustup](https://rustup.rs/).
+- Navigate to wherever you cloned this repository to, right above `/src/`.
+- Run `cargo run`.
+
 
 ## Notes
 <sup>1</sup>Possibly rewrite the neural network to use matrices instead.  
