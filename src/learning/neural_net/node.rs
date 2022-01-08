@@ -3,9 +3,12 @@ use std::sync::{Arc, Mutex};
 use crate::learning::neural_net::edge::Edge;
 use crate::learning::neural_net::net_aspect::NetAspect;
 
+
+type EdgeWrapping = Vec<Arc<Mutex<Edge>>>;
+
 #[derive(Clone, Debug)]
 pub struct Node {
-  out_edges: Option<Vec<Arc<Mutex<Edge>>>>,  // sheesh
+  out_edges: Option<EdgeWrapping>,  // sheesh
   through_value: Option<f32>,
   threshold: f32,
 }
@@ -48,6 +51,10 @@ impl Node {
       }
       out_vec
     })
+  }
+
+  pub fn get_edges(&mut self) -> &mut EdgeWrapping {
+    self.out_edges.as_mut().unwrap()
   }
 
   pub fn get_through_value(&self) -> f32 {

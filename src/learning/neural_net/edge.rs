@@ -23,8 +23,8 @@ impl Edge {
     self.send_value();
   }
 
-  pub fn give_node(&mut self, node: Node) {
-    self.output_node = Some(Arc::new(Mutex::new(node)));
+  pub fn give_node(&mut self, node: Arc<Mutex<Node>>) {
+    self.output_node = Some(node);
   }
 
   pub fn with_node(node: Node) -> Self {

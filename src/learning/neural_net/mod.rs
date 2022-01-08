@@ -49,6 +49,22 @@ impl NeuralNet {
         node.give_edges(edges_vec);
       }
     }
+    {
+      let next_layer_size = output_layer.len();
+      for layer in hidden_layers.iter_mut() {
+        for node in layer {
+          let mut edges_vec = Vec::new();
+          for _ in 0..next_layer_size {
+            edges_vec.push(Edge::default());
+          }
+          node.give_edges(edges_vec);
+
+          for mut edge in node.get_edges() {
+            edge.lock().unwrap().give_node(node);
+          }
+        }
+      }
+    }
 
     
     
