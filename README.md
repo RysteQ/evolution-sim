@@ -27,11 +27,11 @@
 
 ## Todo list
 - Dumping of a trained model, likely in RON format. This can help with debugging and exposition of this project.
-- Config files to change currently hardcoded values
+- Config files to change currently hardcoded values.
 
 
 ## Notes
-<sup>1</sup>Possibly rewrite the neural network to use matrices instead  
-<sup>2</sup>Currently using `rand` and `ordered-float`  
+<sup>1</sup>Possibly rewrite the neural network to use matrices instead.  
+<sup>2</sup>Currently using `rand` and `ordered-float`.  
 <sup>3</sup>Feel free to contribute!  
-<sup>4</sup>Currently hard-coded
+<sup>4</sup>Currently hard-coded.
