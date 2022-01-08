@@ -5,7 +5,7 @@ use crate::learning::neural_net::net_aspect::NetAspect;
 
 #[derive(Clone, Debug)]
 pub struct Node {
-  out_edges: Option<Vec<Arc<Mutex<Edge>>>>,
+  out_edges: Option<Vec<Arc<Mutex<Edge>>>>,  // sheesh
   through_value: Option<f32>,
   threshold: f32,
 }

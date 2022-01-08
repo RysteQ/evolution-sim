@@ -3,9 +3,9 @@ use std::sync::{Arc, Mutex};
 use crate::learning::neural_net::node::Node;
 use crate::learning::neural_net::net_aspect::NetAspect;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct Edge {
-  output_node: Arc<Mutex<Node>>,
+  output_node: Option<Arc<Mutex<Node>>>,
   weight: f32,
   through_value: Option<f32>
 }
@@ -22,12 +22,23 @@ impl Edge {
     self.apply_weight();
     self.send_value();
   }
+
+  pub fn give_node(&mut self, node: Node) {
+    self.output_node = Some(Arc::new(Mutex::new(node)));
+  }
+
+  pub fn with_node(node: Node) -> Self {
+    Self {
+      output_node: Some(Arc::new(Mutex::new(node))),
+      ..Default::default()
+    }
+  }
   
   fn apply_weight(&mut self) {
     self.give_value(self.weight * self.through_value.unwrap());
   }
 
   fn send_value(&mut self) {
-    self.output_node.borrow_mut().lock().unwrap().fire(self.through_value.unwrap());
+    self.output_node.as_ref().unwrap().borrow_mut().lock().unwrap().fire(self.through_value.unwrap());
   }
 }

@@ -3,6 +3,7 @@ mod node;
 mod net_aspect;
 
 use crate::learning::neural_net::node::Node;
+use crate::learning::neural_net::edge::Edge;
 
 #[derive(Clone)]
 pub struct NeuralNet {
@@ -13,6 +14,8 @@ pub struct NeuralNet {
 
 impl NeuralNet {
   pub fn new(hidden_layers_count: u32) -> Self {
+    // make the nodes for each layer
+    
     let mut output_layer = Vec::new();
     for _ in 0..5 {  // number of output variables
       output_layer.push(Node::default());
@@ -32,6 +35,19 @@ impl NeuralNet {
     let mut input_layer = Vec::new();
     for _ in 0..5 {  // number of input parameters
       input_layer.push(Node::default());
+    }
+
+
+    // make and attach the edges for each layer
+    {
+      let next_layer_size = hidden_layers.get(0).unwrap().len();
+      for node in input_layer.iter_mut() {
+        let mut edges_vec = Vec::new();
+        for _ in 0..next_layer_size {
+          edges_vec.push(Edge::default());
+        }
+        node.give_edges(edges_vec);
+      }
     }
 
     
