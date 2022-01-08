@@ -13,7 +13,7 @@ pub struct Bias {
 }
 
 impl Bias {
-  pub fn get_inputs(&self, vision: Vision) -> Vec<f32> {
+  pub fn get_inputs(&self, vision: &Vision) -> Vec<f32> {
     let arrows = vision.get_arrows();
     let powerups = vision.get_powerups();
 

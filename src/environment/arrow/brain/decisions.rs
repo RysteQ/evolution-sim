@@ -21,8 +21,8 @@ impl Default for Decisions {
   }
 }
 
-impl From<[f32; 5]> for Decisions {
-  fn from(input_array: [f32; 5]) -> Self {
+impl From<&[f32]> for Decisions {
+  fn from(input_array: &[f32]) -> Self {
     Self {
       up: input_array[0],
       left: input_array[1],

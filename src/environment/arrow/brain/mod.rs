@@ -16,15 +16,26 @@ pub struct Brain {
 }
 
 impl Brain {
-  pub fn default_with_neural_net(hidden_layers: u32) -> Self {
+  pub fn default_with_neural_net(
+    input_layer_size: u32, 
+    hidden_layers_count: u32,
+    hidden_layer_size: u32,
+    output_layer_size: u32,
+  ) -> Self {
     Self {
-      neural_net: NeuralNet::new(hidden_layers),
+      neural_net: NeuralNet::new(
+        input_layer_size,
+        hidden_layers_count,
+        hidden_layer_size,
+        output_layer_size
+      ),
       bias: Bias::default(),
       vision: Vision::default(),
     }
   }
   
   pub fn make_decision(&mut self) -> Direction {
-    Decisions::from().make_decision()
+    self.neural_net.give_inputs(self.bias.get_inputs(&self.vision));
+    Decisions::from(self.neural_net.fire().as_slice()).make_decision()
   }
 }
