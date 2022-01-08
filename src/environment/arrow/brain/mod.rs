@@ -25,8 +25,6 @@ impl Brain {
   }
   
   pub fn make_decision(&mut self) -> Direction {
-    Decisions::from(self.neural_net.get_decision_array({
-      self.bias.get_inputs(self.vision.clone())
-    })).make_decision()
+    Decisions::from().make_decision()
   }
 }
