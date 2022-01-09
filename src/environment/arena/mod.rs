@@ -85,16 +85,13 @@ impl Arena {
     
     // deal with attacking
     let mut board_objects_multimap = MultiMap::new();
-    self.arrows.iter().map(|arrow| board_objects_multimap.insert(arrow.get_coords(), arrow));
+    self.arrows.iter().for_each(|arrow| board_objects_multimap.insert(arrow.get_coords().clone(), arrow.clone()));
 
-    // filter out the ones which are by themselves so they don't get attacked with 0 damage which is stupid
+
+    self.arrows = Vec::new();
     // wish I knew a more functional way to pull this off, shame I need to use for loops
     for (_, arrows_vec) in board_objects_multimap.iter_all() {
-      let mut battle = Vec::new();
-      for arrow in arrows_vec {
-        battle.push(**arrow);
-      }
-      Self::fight(battle);
+      Self::fight(arrows_vec).into_iter().for_each(|arrow| self.arrows.push(arrow));
     }
 
     
@@ -111,10 +108,12 @@ impl Arena {
     };
   }
 
-  pub fn fight(mut arrows: Vec<Arrow>) {
+  pub fn fight(arrows: &Vec<Arrow>) -> Vec<Arrow> {
+    let mut arrows = arrows.clone();
     let mut total_damage = 0;
     arrows.iter().for_each(|arrow| total_damage += arrow.get_health());                        // there must be a better way 
     arrows.iter_mut().for_each(|arrow| arrow.take_damage(total_damage - arrow.get_health()));  // to chain this stuff together
+    arrows
   }
 
   fn wrap_around_edges(&mut self) {
