@@ -3,7 +3,7 @@ use crate::environment::arrow::brain::Brain;
 pub struct ArrowMaker {
   brain: Brain,
   speed: f32,
-  health: u32,
+  health: i32,
   eyesight: u32,
 }
 
@@ -27,7 +27,7 @@ impl ArrowMaker {
     self.speed
   }
 
-  pub fn get_health(&self) -> u32 {
+  pub fn get_health(&self) -> i32 {
     self.health
   }
 

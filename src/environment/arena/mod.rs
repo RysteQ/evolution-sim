@@ -75,11 +75,25 @@ impl Arena {
   }
 
   pub fn update(&mut self) {
-    self.arrows.iter_mut().for_each(|a| a.tick());
-
+    // let the arrows do their movement
+    self.arrows.iter_mut().for_each(|arrow| arrow.tick());
 
     
-    // wrap the arrows around the board
+    // wrap before attacking so they don't wrap into another
+    self.wrap_around_edges();
+
+    
+    // remove the ones which are dead
+    self.arrows = {
+      let mut new_arrows = Vec::new();
+      for _ in 0..self.arrows.len() {
+        new_arrows.push(self.arrows.pop().unwrap())
+      }
+      new_arrows
+    };
+  }
+
+  fn wrap_around_edges(&mut self) {
     for i in 0..self.arrows.len() {
       let arrow = self.arrows.get_mut(i).unwrap();
       let coords = arrow.get_coords();

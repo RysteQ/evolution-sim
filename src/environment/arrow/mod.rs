@@ -11,7 +11,7 @@ pub struct Arrow {
   brain: Brain,
   symbol: char,
   speed: f32,
-  health: u32,
+  health: i32,
   eyesight: u32,
   previous_movement: Direction
 }
@@ -28,12 +28,18 @@ impl From<&ArrowMaker> for Arrow {
 }
 
 impl Arrow {
-  pub fn tick(&mut self) {
+  pub fn tick(&mut self) {  // returns it's health
     let decision = self.brain.make_decision();
-    self.make_move(decision)
+    self.make_move(decision);
   }
 
-  fn new(brain: Brain, speed: f32, health: u32, eyesight: u32) -> Self {
+  pub fn fight(mut arrows: Vec<Self>) {
+    let mut total_damage = 0;
+    arrows.iter().for_each(|arrow| total_damage += arrow.get_health());            // there must be a better way to 
+    arrows.iter_mut().for_each(|arrow| arrow.take_damage(total_damage));           // chain this stuff together
+  }
+
+  fn new(brain: Brain, speed: f32, health: i32, eyesight: u32) -> Self {
     Self {
       coords: None,
       brain,
@@ -53,6 +59,14 @@ impl Arrow {
     self.coords.unwrap()
   }
 
+  pub fn get_health(&self) -> i32 {
+    self.health
+  }
+
+  pub fn take_damage(&mut self, damage: i32) {
+    self.health -= damage;
+  }
+  
   pub fn get_symbol(&self) -> char {
     self.symbol
   }

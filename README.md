@@ -19,9 +19,7 @@
 - The sides of the arena are indicated by a █ character. The edge is not included in the useable arena area.
 - Various "powerups" are in the arena, indicated by either an "a", "h", or "e". They boost the arrows' speed, health, or eyesight, respectively.
 - Speed lasts some<sup>3</sup> number of ticks.
-- Health increases the amount of health they have by 1<sup>3</sup>. When an arrow hits another arrow head-on, they lose the amount of health the other one had, and if their health is 0 they die.
-  - Attacking is done with the front of the arrow, and is the only way they can deal damage. If they get hit from the front of another arrow anywhere, even their front, the they take damage. As mentioned previously, the arrow with higher health wins and if they are the same then they both die.
-  - If an arrow is hit from the sides or back they will take damage without dealing damage. Because of this, the health attribute can be thought of as both attack and health.
+- Health increases the amount of health they have by 1<sup>3</sup>. When an arrow collides with another arrow, they both lose the amount of health the other one had. If their health is 0, they die.
 - When some number of arrows left reaches some number<sup>3</sup>, the round ends and the ones left are used to repopulate the next round.
 - On the first iteration, all the arrows have the same default value. After that, they are all (likely mutated) copies of their parent arrow. There are always some number<sup>3</sup> of arrows which aren't mutated left over, in case all of the mutations are bad.
 
