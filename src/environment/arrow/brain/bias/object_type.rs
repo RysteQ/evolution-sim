@@ -1,6 +1,6 @@
 use crate::environment::arena::modifier::Modifier;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub enum ObjectType {
   PowerupObject(Modifier),
   ArrowObject,

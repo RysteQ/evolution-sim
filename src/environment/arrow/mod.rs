@@ -6,8 +6,9 @@ use crate::environment::arrow::arrow_maker::ArrowMaker;
 use crate::environment::arrow::direction::Direction;
 use crate::environment::arrow::brain::Brain;
 
+#[derive(Clone, Debug)]
 pub struct Arrow {
-  coords: Option<[u32; 2]>,
+  coords: Option<[u32; 2]>,  // make it so it's not storing coords twice, here and in the multimap
   brain: Brain,
   symbol: char,
   speed: f32,
@@ -28,15 +29,9 @@ impl From<&ArrowMaker> for Arrow {
 }
 
 impl Arrow {
-  pub fn tick(&mut self) {  // returns it's health
+  pub fn tick(&mut self) {
     let decision = self.brain.make_decision();
     self.make_move(decision);
-  }
-
-  pub fn fight(mut arrows: Vec<Self>) {
-    let mut total_damage = 0;
-    arrows.iter().for_each(|arrow| total_damage += arrow.get_health());            // there must be a better way to 
-    arrows.iter_mut().for_each(|arrow| arrow.take_damage(total_damage));           // chain this stuff together
   }
 
   fn new(brain: Brain, speed: f32, health: i32, eyesight: u32) -> Self {

@@ -1,5 +1,6 @@
 use crate::environment::arena::modifier::Modifier;
 
+#[derive(Debug)]
 pub struct Powerup {
   coords: [u32; 2],
   modifier: Modifier,

@@ -6,7 +6,7 @@ use crate::environment::arrow::brain::bias::distance_bias::DistanceBias;
 use crate::environment::arrow::brain::bias::object_bias::ObjectBias;
 use crate::environment::arrow::brain::vision::Vision;
 
-#[derive(Default, Clone)]
+#[derive(Default, Clone, Debug)]
 pub struct Bias {
   distance_bias: DistanceBias,
   object_bias: ObjectBias,

@@ -8,7 +8,7 @@ use crate::environment::arrow::direction::Direction;
 use crate::environment::arrow::brain::bias::Bias;
 use crate::learning::neural_net::NeuralNet;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Brain {
   neural_net: NeuralNet,
   bias: Bias,

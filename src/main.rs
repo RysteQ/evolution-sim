@@ -21,7 +21,7 @@ fn main() {
 
   
   let arrow_maker = ArrowMaker::default();
-  let arena_counter = Arc::new(Mutex::new(Arena::new([50, 25], 6, 10, arrow_maker)));
+  let arena_counter = Arc::new(Mutex::new(Arena::new([10, 5], 0, 2, arrow_maker)));
 
   let render_arena_counter = Arc::clone(&arena_counter);
   thread::spawn(move || {

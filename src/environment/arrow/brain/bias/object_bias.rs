@@ -7,7 +7,7 @@
 use crate::environment::arrow::brain::bias::object_type::ObjectType;
 use crate::environment::arena::modifier::Modifier;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct ObjectBias {
   arrow: f32,
   eyesight: f32,

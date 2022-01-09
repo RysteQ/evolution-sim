@@ -2,7 +2,7 @@
 
 type MatrixValues = Vec<Option<f32>>;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Layer(MatrixValues);
 
 impl Layer {

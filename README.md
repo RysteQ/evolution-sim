@@ -34,6 +34,6 @@
 
 
 ## Notes
-<sup>1</sup>Currently using `rand` and `ordered-float`.  
+<sup>1</sup>Currently using `rand`, `ordered-float`, and `multimap`.  
 <sup>2</sup>Feel free to contribute!  
 <sup>3</sup>Currently hard-coded.

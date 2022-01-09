@@ -3,7 +3,7 @@ use rand::{
   Rng,
 };
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub enum Modifier {
   Eyesight,
   Speed,

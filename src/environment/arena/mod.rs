@@ -3,17 +3,18 @@ pub mod modifier;
 mod distributor;
 
 
+use multimap::MultiMap;
 use crate::environment::arena::powerup::Powerup;
 use crate::environment::arena::distributor::Distributor;
 use crate::environment::arrow::Arrow;
 use crate::environment::arrow::arrow_maker::ArrowMaker;
 
 
+#[derive(Debug)]
 pub struct Arena {
   dimensions: [u32; 2],
   powerups: Vec<Powerup>,
   arrows: Vec<Arrow>,
-  distributor: Distributor,
 }
 
 impl Arena {
@@ -39,7 +40,6 @@ impl Arena {
       dimensions,
       powerups,
       arrows,
-      distributor
     }
   }
 
@@ -83,14 +83,38 @@ impl Arena {
     self.wrap_around_edges();
 
     
-    // remove the ones which are dead
+    // deal with attacking
+    let mut board_objects_multimap = MultiMap::new();
+    self.arrows.iter().map(|arrow| board_objects_multimap.insert(arrow.get_coords(), arrow));
+
+    // filter out the ones which are by themselves so they don't get attacked with 0 damage which is stupid
+    // wish I knew a more functional way to pull this off, shame I need to use for loops
+    for (_, arrows_vec) in board_objects_multimap.iter_all() {
+      let mut battle = Vec::new();
+      for arrow in arrows_vec {
+        battle.push(**arrow);
+      }
+      Self::fight(battle);
+    }
+
+    
+    // remove the ones which are dead last
     self.arrows = {
       let mut new_arrows = Vec::new();
       for _ in 0..self.arrows.len() {
-        new_arrows.push(self.arrows.pop().unwrap())
+        let potential_arrow = self.arrows.pop().unwrap();
+        if potential_arrow.get_health() > 0 {
+          new_arrows.push(potential_arrow);
+        }
       }
       new_arrows
     };
+  }
+
+  pub fn fight(mut arrows: Vec<Arrow>) {
+    let mut total_damage = 0;
+    arrows.iter().for_each(|arrow| total_damage += arrow.get_health());                        // there must be a better way 
+    arrows.iter_mut().for_each(|arrow| arrow.take_damage(total_damage - arrow.get_health()));  // to chain this stuff together
   }
 
   fn wrap_around_edges(&mut self) {

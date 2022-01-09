@@ -3,7 +3,7 @@
   into how much the arrow cares about it
 */
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct DistanceBias(f32);
 
 impl Default for DistanceBias {

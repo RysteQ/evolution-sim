@@ -2,7 +2,7 @@ mod layer;
 
 use crate::learning::neural_net::layer::Layer;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct NeuralNet {
   node_layers: Vec<Layer>,
   edge_layers: Vec<Layer>,
