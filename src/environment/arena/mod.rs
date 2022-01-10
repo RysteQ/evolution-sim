@@ -44,6 +44,8 @@ impl Arena {
   }
 
   pub fn render(&self) {
+    print!("{esc}c", esc = 27 as char);
+    
     for y in 0..self.dimensions[1] {
       'x_loop: for x in 0..self.dimensions[0] {
 
